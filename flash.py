@@ -109,7 +109,8 @@ while True:
             print("WE ARE THE BEST SCHOOL EVER!!!")
         elif cmd.startswith("search "):
             query = cmd.split(" ", 1)[1].strip()
-            sp.run(['curl', f'https://www.google.com/search?q={query}'])
+            result = sp.run(['curl', '-s', f'https://www.google.com/search?q={query}'], stdout=sp.PIPE, text=True)
+            print(result.stdout)
         elif cmd.startswith("translate "):
             text_to_translate = cmd.split(" ", 1)[1].strip()
             sp.run(['trans', text_to_translate])
@@ -297,7 +298,7 @@ while True:
             print("    kill [pid] (terminate, endprocess) - Terminate a process")
             print("    diskusage (showdiskusage, storageinfo) - Display disk usage")
             print("    help (?)                     - Display this help message")
-            print("    exit (quit)                  - Exit flash")           
+            print("    exit (quit)                  - Exit flash")
         elif cmd == "exit" or cmd == "quit":
             print("Exiting flash. Goodbye!")
             sys.exit()
