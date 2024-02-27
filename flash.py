@@ -167,6 +167,8 @@ while True:
             sp.run(['systeminfo'])
         elif cmd == "netstat" or cmd == "networkstatus" or cmd == "shownetwork":
             sp.run(['netstat', '-a'])
+        elif cmd == "" or cmd == "" or cmd == "" or cmd == "":
+            pass
         elif cmd.startswith("chmod "):
             try:
                 permission, file_name = cmd.split(" ", 2)[1:]
@@ -230,6 +232,17 @@ while True:
             print("Running Processes:")
             for process in processes:
                 print(f"    {process.info['pid']}: {process.info['name']}")
+        elif cmd == "shellcmd" or cmd == "shell":
+            try:
+                shcmd = input("What shell command do you want to use?")
+                result = sp.run(shcmd, shell=True, check=True, stdout=sp.PIPE, stderr=sp.PIPE, text=True)
+                print("Command Output:")
+                print(result.stdout)
+                if result.stderr:
+                    print("Error Output:")
+                    print(result.stderr)
+            except sp.CalledProcessError as e:
+                print(f"Error: {e}")
         elif cmd.startswith("kill ") or cmd.startswith("terminate ") or cmd.startswith("endprocess "):
             pid_to_kill = cmd.split(" ", 1)[1].strip()
             try:
@@ -269,6 +282,7 @@ while True:
             print("    calendar (showcalendar, viewcalendar) - Display calendar")
             print("    fortune (randomfortune, showfortune) - Display a random fortune")
             print("    rolladice (dice, rolldice)   - Roll a six-sided dice")
+            print("    shellcmd (or shell)          - Initiate a shell command for the user. (If they use a specific shell, like Bash, the command has to be recognized by the Bash shell.)")
             print("    wiki [topic]                 - Search Wikipedia")
             print("    quote [author]               - Get a random quote by the author")
             print("    info (flashiinfo, information) - Display flash information")
